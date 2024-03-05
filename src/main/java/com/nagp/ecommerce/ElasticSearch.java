@@ -19,8 +19,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
-
-
 @Configuration
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ElasticSearch {
