@@ -27,7 +27,6 @@ public final class FieldAttr {
 
     public static final String PRODUCT_SUGGEST = "product_suggest";
     public static final String PRODUCT_SUGGEST_NAME = "product-suggest";
-    public static final String DID_YOU_MEAN = "did_you_mean";
   }
 
   public static class Aggregations {

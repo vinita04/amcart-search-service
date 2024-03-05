@@ -71,27 +71,10 @@ public class SearchCoreService {
     }
   }
 
-  private void addSuggestion(Builder builder, String term) {
-    Map<String, FieldSuggester> map = new HashMap<>();
-    map.put(FieldAttr.Suggest.DID_YOU_MEAN, FieldSuggester.of(fs -> fs.phrase(p ->
-            p.maxErrors(2.0).size(5).field(FieldAttr.Product.PRODUCT_SUGGEST)
-        )
-    ));
-    Suggester suggester = Suggester.of(sg -> sg
-        .suggesters("did_you_mean", new FieldSuggester.Builder()
-            .phrase(PhraseSuggester.of(p ->
-                p.maxErrors(2.0).size(5).field(FieldAttr.Product.PRODUCT_SUGGEST)))
-            .build())
-        .text(term)
-    );
-    builder.suggest(suggester);
-  }
-
   public SearchResponse<ProductSuggestDTO> autocomplete(String term, int size) throws IOException {
     Map<String, FieldSuggester> map = new HashMap<>();
     map.put(FieldAttr.Suggest.PRODUCT_SUGGEST_NAME, FieldSuggester.of(fs -> fs
-        .completion(cs -> cs.skipDuplicates(true)
-            .size(size)
+        .completion(cs -> cs.size(size)
             .fuzzy(SuggestFuzziness.of(sf -> sf.fuzziness("1").transpositions(true).minLength(2).prefixLength(3)))
             .field(FieldAttr.Suggest.PRODUCT_SUGGEST)
         )
